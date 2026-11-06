@@ -1,0 +1,33 @@
+# Format, lint and the test suite against the locked dependencies, on Linux and on Windows.
+name: Test
+
+on:
+  push:
+    branches: [trunk]
+  pull_request:
+    branches: [trunk]
+  # The version workflow runs this gate before it mints a number.
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-24.04, windows-2025]
+    runs-on: ${{ matrix.runner }}
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Format
+        run: cargo fmt --check
+
+      - name: Lint
+        run: cargo clippy --locked --all-targets -- --deny warnings
+
+      - name: Test
+        run: cargo test --locked

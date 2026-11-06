@@ -1,0 +1,37 @@
+default_install_hook_types: [pre-commit, commit-msg]
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+    -   id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+    -   id: end-of-file-fixer
+    -   id: check-yaml
+    -   id: check-added-large-files
+        args: ['--maxkb=25000']
+-   repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
+    hooks:
+    -   id: gitleaks
+-   repo: local
+    hooks:
+    -   id: cargo-fmt
+        name: cargo fmt
+        language: system
+        entry: cargo fmt --check
+        types: [rust]
+        pass_filenames: false
+-   repo: https://github.com/opensource-nepal/commitlint
+    rev: v2.0.0
+    hooks:
+    -   id: commitlint
+        entry: commitlint --max-header-length 112 --file
+# The changelog groups commits by scope; a header without one drops out of it.
+-   repo: local
+    hooks:
+    -   id: commit-scope
+        name: commit header names a scope
+        language: pygrep
+        entry: '\A\w+!?:'
+        args: [--multiline]
+        stages: [commit-msg]

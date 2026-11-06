@@ -1,0 +1,13 @@
+# Rust
+target/
+
+# Environment
+.env
+*.env
+
+# Editors
+.vscode/
+.idea/
+
+# Agent worktrees — separate checkouts, never part of this repository.
+.worktrees/

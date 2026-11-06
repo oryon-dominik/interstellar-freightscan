@@ -1,0 +1,2 @@
+# The repository stores LF, whatever a machine's core.autocrlf says.
+* text=auto eol=lf

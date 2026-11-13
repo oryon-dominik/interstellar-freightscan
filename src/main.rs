@@ -214,9 +214,7 @@ fn run_fleet(repos: Option<PathBuf>, each: bool, include: fleet::Include, output
         ),
         (None, None) => {
             return Err(format!(
-                "no repository list.
-
-{}",
+                "no repository list.\n\n{}",
                 list_help(std::io::stderr().is_terminal() && !colourless())
             ));
         }

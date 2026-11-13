@@ -2,7 +2,6 @@
 
 [![crates.io](https://img.shields.io/crates/v/freightscan.svg)](https://crates.io/crates/freightscan)
 [![Test](https://github.com/oryon-dominik/interstellar-freightscan/actions/workflows/test.yml/badge.svg?branch=trunk)](https://github.com/oryon-dominik/interstellar-freightscan/actions/workflows/test.yml)
-[![MSRV](https://img.shields.io/crates/msrv/freightscan.svg)](https://crates.io/crates/freightscan)
 [![License: MIT](https://img.shields.io/crates/l/freightscan.svg)](LICENSE)
 
 Counts every line of a repository by language, role and kind.

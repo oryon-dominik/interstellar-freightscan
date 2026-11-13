@@ -70,7 +70,7 @@ and the bar last. Redirected, the output is plain text.
 ## Several repositories
 
 `freightscan fleet` reads a JSON list of repositories from the file `FREIGHTSCAN_REPOS` names,
-or from `--repos FILE`. Paths may start with `~` and name environment variables as
+or from `--repos FILE`. Paths may start with `~/` and name environment variables as
 `$env:NAME` or `$NAME` — in the list and in `FREIGHTSCAN_REPOS` itself. A repository marked
 `inactive` is skipped. So is one that is not our own engineering — a fork marked
 `"owned": false`, a private repository marked `"professional": false` — unless `--forks` or

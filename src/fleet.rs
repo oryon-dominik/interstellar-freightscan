@@ -5,7 +5,7 @@
 //! {"repositories": [{"name": "atlas", "paths": {"windows": "$env:PROJECTS/atlas", "posix": "~/projects/atlas"}}]}
 //! ```
 //!
-//! A path may start with `~` or name environment variables as `$env:NAME` or `$NAME`. A
+//! A path may start with `~/` or name environment variables as `$env:NAME` or `$NAME`. A
 //! repository marked `"inactive": true` is skipped. So is one that is not our own engineering —
 //! marked `"owned": false` (a fork) or `"professional": false` (private) — unless it is asked for.
 
@@ -84,10 +84,12 @@ pub fn read(
 }
 
 /// Replace `~` and environment variables in a path; None when a variable is not set.
+///
+/// Only `~` alone or before `/` is the home directory; `~name` stays as written.
 pub fn expand(raw: &str, lookup: &impl Fn(&str) -> Option<String>) -> Option<String> {
     let mut out = String::new();
     let mut rest = raw;
-    if let Some(after) = rest.strip_prefix('~') {
+    if let Some(after) = rest.strip_prefix('~').filter(|after| after.is_empty() || after.starts_with('/')) {
         out.push_str(&lookup("HOME").or_else(|| lookup("USERPROFILE"))?);
         rest = after;
     }
@@ -160,6 +162,13 @@ mod tests {
     fn the_example_is_a_list_freightscan_reads() {
         let fleet = read(EXAMPLE, "linux", Include { forks: true, private: true }, lookup).unwrap();
         assert_eq!(fleet.repositories.len(), 4);
+    }
+
+    #[test]
+    fn only_a_tilde_alone_or_before_a_slash_is_the_home_directory() {
+        assert_eq!(expand("~", &lookup).as_deref(), Some("/home/ada"));
+        assert_eq!(expand("~/x", &lookup).as_deref(), Some("/home/ada/x"));
+        assert_eq!(expand("~alice/x", &lookup).as_deref(), Some("~alice/x"));
     }
 
     #[test]

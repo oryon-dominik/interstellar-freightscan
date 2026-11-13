@@ -7,12 +7,12 @@
 
 [doc('Run the test suite')]
 @test *args:
-    cargo test {{ args }}
+    cargo test --locked {{ args }}
 
 [doc('Lint and check formatting')]
 @lint:
     cargo fmt --check
-    cargo clippy --all-targets -- --deny warnings
+    cargo clippy --locked --all-targets -- --deny warnings
 
 [doc('Build the release binary')]
 @build:

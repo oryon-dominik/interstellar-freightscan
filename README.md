@@ -1,11 +1,24 @@
 # freightscan
 
+[![crates.io](https://img.shields.io/crates/v/freightscan.svg)](https://crates.io/crates/freightscan)
+[![Test](https://github.com/oryon-dominik/interstellar-freightscan/actions/workflows/test.yml/badge.svg?branch=trunk)](https://github.com/oryon-dominik/interstellar-freightscan/actions/workflows/test.yml)
+[![MSRV](https://img.shields.io/crates/msrv/freightscan.svg)](https://crates.io/crates/freightscan)
+[![License: MIT](https://img.shields.io/crates/l/freightscan.svg)](LICENSE)
+
 Counts every line of a repository by language, role and kind.
+
+Good line counters exist — [tokei](https://github.com/XAMPPRocky/tokei),
+[scc](https://github.com/boyter/scc), [cloc](https://github.com/AlDanial/cloc) — but they count
+code, comments and blanks per language. I wanted to know what the lines are for, and I did not
+need many languages for it, only the ones my repositories are written in.
 
 freightscan says what the lines of a repository are for — source, test, documentation,
 configuration, data, template, script — and what each line is: code, docstring, comment, prose,
 data or blank. Records, logs and datasets count as data, not code: JSON Lines, CSV and log files,
 and JSON under a `data`, `events`, `logs`, `records`, `reports` or `state` directory.
+
+The name is my soft spot for space fluff: freight is what a starship carries, and freightscan
+scans the cargo hold of a repository. 🚀
 
 ## Languages
 

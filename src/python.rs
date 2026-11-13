@@ -107,7 +107,7 @@ fn docstring_lines(lexemes: &[Lexeme], count: usize) -> Vec<bool> {
                 continue;
             }
             expect = false;
-            header = token == Token::Name && matches!(text, "def" | "class" | "async");
+            header = token == Token::Name && matches!(text, "def" | "class");
         } else if let (Some((first, _)), Token::String) = (pending, token) {
             pending = Some((first, end));
             continue;
@@ -440,6 +440,7 @@ mod tests {
             ("one-line body", "def go(): \"Doc.\"\n", &[Docstring]),
             ("after a comment", "class Probe:\n    # why\n    \"\"\"Doc.\"\"\"\n", &[Code, Comment, Docstring]),
             ("decorated async", "@decorated\nasync def go():\n    \"\"\"Doc.\"\"\"\n", &[Code, Code, Docstring]),
+            ("inside an async for", "async for item in items:\n    \"\"\"Not a docstring.\"\"\"\n", &[Code, Code]),
             (
                 "colon inside the signature",
                 "def go(x: dict = {1: 2}) -> int:\n    \"\"\"Doc.\"\"\"\n",

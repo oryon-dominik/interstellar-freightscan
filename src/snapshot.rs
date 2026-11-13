@@ -84,7 +84,7 @@ mod tests {
     }
 
     #[test]
-    fn shall_36_the_latest_instant_wins_even_when_its_text_sorts_first() {
+    fn the_latest_instant_wins_even_when_its_text_sorts_first() {
         let root = "C:/dev/repository";
         let summer = json!({"root": root, "at": "2026-10-25T02:30:00+02:00", "matrix": []});
         let winter = json!({"root": root, "at": "2026-10-25T02:30:00+01:00", "matrix": []});

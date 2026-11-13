@@ -389,7 +389,7 @@ mod tests {
     use Kind::*;
 
     #[test]
-    fn shall_11_module_class_and_function_docstrings_are_docstrings() {
+    fn module_class_and_function_docstrings_are_docstrings() {
         let text = concat!(
             "\"\"\"Module.\"\"\"\n",
             "\n",
@@ -411,7 +411,7 @@ mod tests {
     }
 
     #[test]
-    fn shall_12_a_hash_inside_a_string_is_code() {
+    fn a_hash_inside_a_string_is_code() {
         assert_eq!(kinds("marker = \"# not a comment\"\n").unwrap(), [Code]);
     }
 
@@ -426,14 +426,14 @@ mod tests {
     }
 
     #[test]
-    fn shall_23_a_file_that_does_not_parse_gives_no_classification() {
+    fn a_file_that_does_not_parse_gives_no_classification() {
         assert!(kinds("def broken(:\n").is_none());
         assert!(kinds("value = 'open\n").is_none());
         assert!(kinds("value = \"\"\"open\n").is_none());
     }
 
     #[test]
-    fn shall_11_docstrings_are_the_first_statement_of_module_class_and_function() {
+    fn docstrings_are_the_first_statement_of_module_class_and_function() {
         let cases: &[(&str, &str, &[Kind])] = &[
             ("after a shebang", "#!/usr/bin/env python\n\"\"\"Doc.\"\"\"\n", &[Comment, Docstring]),
             ("after an import", "from os import path\n\"\"\"Not first.\"\"\"\n", &[Code, Code]),

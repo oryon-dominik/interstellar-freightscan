@@ -82,7 +82,7 @@ mod tests {
     }
 
     #[test]
-    fn shall_9_roles_follow_the_role_table() {
+    fn roles_follow_the_role_table() {
         let table = [
             ("tests/test_count.py", Role::Test),
             ("application/apps/space/tests/factories.py", Role::Test),
@@ -136,7 +136,7 @@ mod tests {
     }
 
     #[test]
-    fn shall_9_the_first_matching_row_wins() {
+    fn the_first_matching_row_wins() {
         assert_eq!(role("tests/fixtures/run.sh", &languages::SHELL), Role::Test);
     }
 }

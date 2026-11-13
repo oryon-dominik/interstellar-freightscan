@@ -181,7 +181,7 @@ mod tests {
     }
 
     #[test]
-    fn shall_51_the_test_share_weighs_test_code_against_source_code() {
+    fn the_test_share_weighs_test_code_against_source_code() {
         let repository = scan(&[
             ("src/probe.py", b"\"\"\"Doc.\"\"\"\na = 1\nb = 2\nc = 3\n"),
             ("tests/test_probe.py", b"assert True\n"),
@@ -198,7 +198,7 @@ mod tests {
     }
 
     #[test]
-    fn shall_46_files_sort_by_key_and_direction() {
+    fn files_sort_by_key_and_direction() {
         let repository = scan(&[
             ("b.py", b"a = 1\nb = 2\nc = 3\n"),
             ("a.py", b"a = 1\n"),
@@ -216,7 +216,7 @@ mod tests {
     }
 
     #[test]
-    fn shall_45_dialects_fold_into_their_family() {
+    fn dialects_fold_into_their_family() {
         let repository =
             scan(&[("a.json", b"{}\n"), ("b.jsonc", b"// why\n{}\n"), ("Caddyfile", b"a {\n}\n"), (".env", b"A=1\n")]);
         let folded: Vec<_> = by_language(&fold(matrix([&repository]))).into_iter().map(|(name, _)| name).collect();

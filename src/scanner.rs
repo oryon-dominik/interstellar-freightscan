@@ -145,7 +145,7 @@ mod tests {
     use Kind::*;
 
     #[test]
-    fn shall_22_a_line_starting_with_a_hash_is_a_comment() {
+    fn a_line_starting_with_a_hash_is_a_comment() {
         for language in [&languages::TOML, &languages::YAML, &languages::JUSTFILE, &languages::ENV, &languages::SHELL] {
             let text = "# what follows\nkey = 1\n\n  # indented\n";
             assert_eq!(kinds(text, language), [Comment, Code, Blank, Comment], "{}", language.name);
@@ -158,7 +158,7 @@ mod tests {
     }
 
     #[test]
-    fn shall_24_an_unknown_language_counts_only_blank_and_unclassified() {
+    fn an_unknown_language_counts_only_blank_and_unclassified() {
         let text = "plain\n\n# not a comment here\n";
         assert_eq!(kinds(text, &languages::UNKNOWN), [Unclassified, Blank, Unclassified]);
     }
@@ -212,31 +212,31 @@ mod tests {
     }
 
     #[test]
-    fn shall_13_rust_documentation_comments_are_docstrings() {
+    fn rust_documentation_comments_are_docstrings() {
         let text = "//! Crate.\n/// Item.\n// plain\nfn main() {}\n";
         assert_eq!(kinds(text, &languages::RUST), [Docstring, Docstring, Comment, Code]);
     }
 
     #[test]
-    fn shall_13_a_rust_documentation_block_is_a_docstring() {
+    fn a_rust_documentation_block_is_a_docstring() {
         let text = "/** Item.\n * More.\n */\n/* plain */\nfn main() {}\n";
         assert_eq!(kinds(text, &languages::RUST), [Docstring, Docstring, Docstring, Comment, Code]);
     }
 
     #[test]
-    fn shall_14_nested_rust_block_comments_end_at_the_outermost_marker() {
+    fn nested_rust_block_comments_end_at_the_outermost_marker() {
         let text = "/* outer\n/* inner */\nstill outer */\nfn main() {}\n";
         assert_eq!(kinds(text, &languages::RUST), [Comment, Comment, Comment, Code]);
     }
 
     #[test]
-    fn shall_15_powershell_comment_based_help_is_a_docstring() {
+    fn powershell_comment_based_help_is_a_docstring() {
         let text = "<#\n.SYNOPSIS\n    Launch the probe.\n#>\n<# a plain block #>\nWrite-Output 'go'\n";
         assert_eq!(kinds(text, &languages::POWERSHELL), [Docstring, Docstring, Docstring, Docstring, Comment, Code]);
     }
 
     #[test]
-    fn shall_20_django_template_comments_are_comments() {
+    fn django_template_comments_are_comments() {
         let text = "{# one line #}\n{% comment %}\na longer note\n{% endcomment %}\n<p>{{ value }}</p>\n";
         assert_eq!(kinds(text, &languages::DJANGO_TEMPLATE), [Comment, Comment, Comment, Comment, Code]);
     }

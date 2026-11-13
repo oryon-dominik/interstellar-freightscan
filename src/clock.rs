@@ -18,12 +18,12 @@ mod tests {
     const TOKYO: &str = "[chronometer]\ntimezone = \"Asia/Tokyo\"\n";
 
     #[test]
-    fn shall_33_a_configured_zone_is_read() {
+    fn a_configured_zone_is_read() {
         assert_eq!(zone(Some(TOKYO), TimeZone::UTC).iana_name(), Some("Asia/Tokyo"));
     }
 
     #[test]
-    fn shall_35_without_a_readable_zone_the_local_clock_stamps() {
+    fn without_a_readable_zone_the_local_clock_stamps() {
         let local = TimeZone::fixed(jiff::tz::offset(3));
         let texts = [
             None,

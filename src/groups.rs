@@ -33,7 +33,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn shall_50_every_kind_and_role_lands_in_a_shown_group() {
+    fn every_kind_and_role_lands_in_a_shown_group() {
         assert!(Kind::ALL.into_iter().all(|each| KINDS.contains(&kind(each))));
         assert!(Role::ALL.into_iter().all(|each| ROLES.contains(&role(each))));
         assert_eq!(kind(Kind::Prose), "docs");

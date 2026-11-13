@@ -348,7 +348,7 @@ mod tests {
     const CODE: &str = "\x1b[36m";
 
     #[test]
-    fn shall_41_progress_fills_its_share_and_names_what_still_runs() {
+    fn progress_fills_its_share_and_names_what_still_runs() {
         let running = ["atlas".to_owned(), "beacon".to_owned()];
         let line = progress(29, 58, &running, 100);
         assert_eq!(line.matches('━').count(), PROGRESS / 2);
@@ -358,12 +358,12 @@ mod tests {
     }
 
     #[test]
-    fn shall_40_the_largest_row_fills_the_bar() {
+    fn the_largest_row_fills_the_bar() {
         assert_eq!(bar(&[(CODE, 30), (DIM, 10)], 40, 24).1, 24);
     }
 
     #[test]
-    fn shall_40_a_row_too_small_for_a_block_still_shows_a_sliver() {
+    fn a_row_too_small_for_a_block_still_shows_a_sliver() {
         let (painted, drawn) = bar(&[(CODE, 1)], 10_000, 24);
         assert_eq!(drawn, 1);
         assert!(painted.contains(SLIVER));
@@ -393,7 +393,7 @@ mod tests {
     }
 
     #[test]
-    fn shall_47_the_head_ranks_the_role_groups_and_names_kinds_and_tests() {
+    fn the_head_ranks_the_role_groups_and_names_kinds_and_tests() {
         let scan = crate::count::assemble(
             std::path::PathBuf::from("repository"),
             [

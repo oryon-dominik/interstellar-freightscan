@@ -127,7 +127,7 @@ mod tests {
     ]}"#;
 
     #[test]
-    fn shall_38_the_fleet_reads_every_active_repository_for_this_system() {
+    fn the_fleet_reads_every_active_repository_for_this_system() {
         let fleet = read(MANIFEST, "windows", Include::default(), lookup).unwrap();
         let paths: Vec<_> = fleet.repositories.iter().map(|repository| repository.path.as_str()).collect();
         assert_eq!(paths, ["C:/Users/ada/projects/atlas", "C:/Users/ada/projects/beacon"]);
@@ -135,7 +135,7 @@ mod tests {
     }
 
     #[test]
-    fn shall_38_a_posix_machine_reads_the_posix_paths() {
+    fn a_posix_machine_reads_the_posix_paths() {
         let fleet = read(MANIFEST, "linux", Include::default(), lookup).unwrap();
         assert_eq!(
             fleet.repositories,
@@ -145,7 +145,7 @@ mod tests {
     }
 
     #[test]
-    fn shall_48_forks_and_private_repositories_join_only_when_asked_for() {
+    fn forks_and_private_repositories_join_only_when_asked_for() {
         let named = |forks, private| -> Vec<String> {
             let fleet = read(MANIFEST, "windows", Include { forks, private }, lookup).unwrap();
             fleet.repositories.into_iter().map(|repository| repository.name).collect()

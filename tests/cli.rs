@@ -89,7 +89,7 @@ fn text(path: &Path) -> String {
 }
 
 #[test]
-fn shall_1_inside_git_only_tracked_files_are_counted() {
+fn inside_git_only_tracked_files_are_counted() {
     let scratch = Scratch::new();
     let root = scratch.git_repository(&[("probe.py", PROBE)]);
     fs::write(root.join("untracked.py"), "value = 2\n").unwrap();
@@ -97,7 +97,7 @@ fn shall_1_inside_git_only_tracked_files_are_counted() {
 }
 
 #[test]
-fn shall_2_outside_git_dependency_cache_and_build_directories_are_skipped() {
+fn outside_git_dependency_cache_and_build_directories_are_skipped() {
     let scratch = Scratch::new();
     let root = scratch.plain_directory(&[
         ("probe.py", PROBE),
@@ -110,7 +110,7 @@ fn shall_2_outside_git_dependency_cache_and_build_directories_are_skipped() {
 }
 
 #[test]
-fn shall_6_the_exclusions_are_reported_per_reason() {
+fn the_exclusions_are_reported_per_reason() {
     let scratch = Scratch::new();
     let root =
         scratch.git_repository(&[("probe.py", PROBE), ("django.mo", b"\x00\x01"), ("uv.lock", b"version = 1\n")]);
@@ -119,7 +119,7 @@ fn shall_6_the_exclusions_are_reported_per_reason() {
 }
 
 #[test]
-fn shall_7_a_missing_directory_ends_with_an_error_that_names_it() {
+fn a_missing_directory_ends_with_an_error_that_names_it() {
     let scratch = Scratch::new();
     let output = scratch.run(&[&text(&scratch.path("nowhere"))]);
     assert!(!output.status.success());
@@ -127,7 +127,7 @@ fn shall_7_a_missing_directory_ends_with_an_error_that_names_it() {
 }
 
 #[test]
-fn shall_23_unparsed_python_files_are_reported() {
+fn unparsed_python_files_are_reported() {
     let scratch = Scratch::new();
     let root = scratch.git_repository(&[("broken.py", b"def broken(:\n")]);
     assert_eq!(scratch.json(&[&text(&root)])["scans"][0]["unparsed"], json!(["broken.py"]));
@@ -135,7 +135,7 @@ fn shall_23_unparsed_python_files_are_reported() {
 }
 
 #[test]
-fn shall_27_output_that_is_not_a_terminal_carries_no_escape_sequences() {
+fn output_that_is_not_a_terminal_carries_no_escape_sequences() {
     let scratch = Scratch::new();
     let output = scratch.stdout(&[&text(&scratch.git_repository(&[("probe.py", PROBE)]))]);
     assert!(!output.contains('\x1b'));
@@ -143,7 +143,7 @@ fn shall_27_output_that_is_not_a_terminal_carries_no_escape_sequences() {
 }
 
 #[test]
-fn shall_28_the_json_document_carries_the_tables_and_a_schema_version() {
+fn the_json_document_carries_the_tables_and_a_schema_version() {
     let scratch = Scratch::new();
     let root = scratch.git_repository(&[("probe.py", PROBE), ("tests/test_probe.py", b"assert True\n")]);
     let document = scratch.json(&[&text(&root)]);
@@ -154,7 +154,7 @@ fn shall_28_the_json_document_carries_the_tables_and_a_schema_version() {
 }
 
 #[test]
-fn shall_30_several_directories_are_reported_each_and_combined() {
+fn several_directories_are_reported_each_and_combined() {
     let scratch = Scratch::new();
     let first = scratch.git_repository(&[("probe.py", PROBE)]);
     let second = scratch.git_repository(&[("other.py", b"value = 2\n")]);
@@ -167,7 +167,7 @@ fn shall_30_several_directories_are_reported_each_and_combined() {
 }
 
 #[test]
-fn shall_25_and_26_the_terminal_view_has_a_head_and_a_language_table_and_details_on_demand() {
+fn and_26_the_terminal_view_has_a_head_and_a_language_table_and_details_on_demand() {
     let scratch = Scratch::new();
     let root = scratch.git_repository(&[
         ("probe.py", PROBE),
@@ -187,7 +187,7 @@ fn shall_25_and_26_the_terminal_view_has_a_head_and_a_language_table_and_details
 }
 
 #[test]
-fn shall_29_the_file_listing_reports_every_file() {
+fn the_file_listing_reports_every_file() {
     let scratch = Scratch::new();
     let root = scratch.git_repository(&[("probe.py", PROBE), ("tests/test_probe.py", b"assert True\n")]);
     let files = &scratch.json(&[&text(&root), "--files"])["scans"][0]["files"];
@@ -202,7 +202,7 @@ fn shall_29_the_file_listing_reports_every_file() {
 }
 
 #[test]
-fn shall_37_the_matrix_reports_every_count_per_language_role_and_kind() {
+fn the_matrix_reports_every_count_per_language_role_and_kind() {
     let scratch = Scratch::new();
     let root = scratch.git_repository(&[("probe.py", PROBE), ("tests/test_probe.py", b"assert True\n")]);
     let matrix = &scratch.json(&[&text(&root), "--matrix"])["scans"][0]["matrix"];
@@ -226,7 +226,7 @@ fn without_the_switches_the_json_carries_neither_matrix_nor_files() {
 }
 
 #[test]
-fn shall_39_and_42_the_dense_view_fits_the_width_it_is_given() {
+fn and_42_the_dense_view_fits_the_width_it_is_given() {
     let scratch = Scratch::new();
     let root = scratch.git_repository(&[
         ("probe.py", PROBE),
@@ -248,7 +248,7 @@ fn shall_39_and_42_the_dense_view_fits_the_width_it_is_given() {
 }
 
 #[test]
-fn shall_40_the_largest_row_fills_its_bar_and_the_share_is_a_percentage() {
+fn the_largest_row_fills_its_bar_and_the_share_is_a_percentage() {
     let scratch = Scratch::new();
     let root = scratch.git_repository(&[("probe.py", PROBE), ("tests/test_probe.py", b"assert True\n")]);
     let output = Command::new(env!("CARGO_BIN_EXE_freightscan"))
@@ -295,7 +295,7 @@ fn offset_seconds(record: &Value) -> i32 {
 }
 
 #[test]
-fn shall_31_each_run_appends_one_line_per_directory() {
+fn each_run_appends_one_line_per_directory() {
     let scratch = Scratch::new();
     let first = scratch.git_repository(&[("probe.py", b"value = 1\n")]);
     let second = scratch.git_repository(&[("other.py", b"value = 2\n")]);
@@ -307,7 +307,7 @@ fn shall_31_each_run_appends_one_line_per_directory() {
 }
 
 #[test]
-fn shall_32_every_record_carries_its_utc_offset() {
+fn every_record_carries_its_utc_offset() {
     let scratch = Scratch::new();
     let record =
         &snap(&scratch, &scratch.git_repository(&[("probe.py", b"value = 1\n")]), &scratch.path("freight.jsonl"))[0];
@@ -317,7 +317,7 @@ fn shall_32_every_record_carries_its_utc_offset() {
 }
 
 #[test]
-fn shall_33_a_configured_zone_stamps_the_records() {
+fn a_configured_zone_stamps_the_records() {
     let scratch = Scratch::new();
     fs::write(scratch.path("config.toml"), TOKYO).unwrap();
     let record =
@@ -326,7 +326,7 @@ fn shall_33_a_configured_zone_stamps_the_records() {
 }
 
 #[test]
-fn shall_34_a_configuration_linked_to_a_chronometer_reads_its_zone() {
+fn a_configuration_linked_to_a_chronometer_reads_its_zone() {
     let scratch = Scratch::new();
     let chronometer = scratch.path("chronometer.toml");
     fs::write(&chronometer, TOKYO).unwrap();
@@ -340,7 +340,7 @@ fn shall_34_a_configuration_linked_to_a_chronometer_reads_its_zone() {
 }
 
 #[test]
-fn shall_35_a_dangling_link_falls_back_to_the_local_clock() {
+fn a_dangling_link_falls_back_to_the_local_clock() {
     let scratch = Scratch::new();
     if !link(&scratch.path("gone.toml"), &scratch.path("config.toml")) {
         eprintln!("skipped: this machine refuses symbolic links");
@@ -361,7 +361,7 @@ fn link(source: &Path, target: &Path) -> bool {
 }
 
 #[test]
-fn shall_36_the_change_per_role_is_reported_against_the_latest_record() {
+fn the_change_per_role_is_reported_against_the_latest_record() {
     let scratch = Scratch::new();
     let root =
         scratch.git_repository(&[("probe.py", b"value = 1\nvalue = 2\n"), ("tests/test_probe.py", b"assert True\n")]);
@@ -399,7 +399,7 @@ fn os_key() -> &'static str {
 }
 
 #[test]
-fn shall_38_and_44_the_fleet_scans_every_repository_as_one_row_and_names_the_absent() {
+fn and_44_the_fleet_scans_every_repository_as_one_row_and_names_the_absent() {
     let scratch = Scratch::new();
     let alpha = scratch.git_repository(&[("probe.py", PROBE)]);
     let beta = scratch.git_repository(&[("other.py", b"value = 2\n")]);
@@ -431,7 +431,7 @@ fn shall_38_and_44_the_fleet_scans_every_repository_as_one_row_and_names_the_abs
 }
 
 #[test]
-fn shall_48_forks_and_private_repositories_join_the_fleet_only_when_asked_for() {
+fn forks_and_private_repositories_join_the_fleet_only_when_asked_for() {
     let scratch = Scratch::new();
     let work = scratch.git_repository(&[("probe.py", PROBE)]);
     let diary = scratch.git_repository(&[("notes.py", b"value = 2\n")]);
@@ -456,7 +456,7 @@ fn shall_48_forks_and_private_repositories_join_the_fleet_only_when_asked_for() 
 }
 
 #[test]
-fn shall_51_tests_adds_the_test_share_of_every_directory() {
+fn tests_adds_the_test_share_of_every_directory() {
     let scratch = Scratch::new();
     let tested = scratch.git_repository(&[("probe.py", b"value = 1\n"), ("tests/test_probe.py", b"assert True\n")]);
     let untested = scratch.git_repository(&[("other.py", b"value = 2\n")]);
@@ -479,7 +479,7 @@ fn row_of(text: &str, name: &str) -> String {
 }
 
 #[test]
-fn shall_38_the_fleet_list_can_be_passed_on_the_command_line() {
+fn the_fleet_list_can_be_passed_on_the_command_line() {
     let scratch = Scratch::new();
     let alpha = scratch.git_repository(&[("probe.py", PROBE)]);
     let list = manifest(&scratch, json!([{"name": "alpha", "paths": {os_key(): text(&alpha)}}]));
@@ -513,7 +513,7 @@ fn the_fleet_lists_files_and_changes_without_each() {
 }
 
 #[test]
-fn shall_52_inline_rust_tests_count_as_test_code() {
+fn inline_rust_tests_count_as_test_code() {
     let scratch = Scratch::new();
     let source = b"fn main() {}\n\n#[cfg(test)]\nmod tests {\n    #[test]\n    fn launch() {}\n}\n";
     let root = scratch.git_repository(&[("src/main.rs", source)]);
@@ -537,7 +537,7 @@ fn tests_adds_the_test_share_to_the_json_document() {
 }
 
 #[test]
-fn shall_53_no_color_keeps_the_rich_view_free_of_colour() {
+fn no_color_keeps_the_rich_view_free_of_colour() {
     let scratch = Scratch::new();
     let root = scratch.git_repository(&[("probe.py", PROBE)]);
     let run = |value: &str| {
@@ -562,7 +562,7 @@ fn an_option_before_the_verb_is_told_where_it_belongs() {
 }
 
 #[test]
-fn shall_43_without_a_repository_list_the_fleet_asks_for_one() {
+fn without_a_repository_list_the_fleet_asks_for_one() {
     let scratch = Scratch::new();
     let output = scratch.run(&["fleet"]);
     assert!(!output.status.success());

@@ -78,7 +78,7 @@ mod tests {
     }
 
     #[test]
-    fn shall_3_a_binary_file_is_excluded() {
+    fn a_binary_file_is_excluded() {
         assert_eq!(
             count_file("locale/de/django.mo", b"\xde\x12\x04\x95\x00\x00"),
             Counted::Excluded(Exclusion::Binary)
@@ -86,26 +86,26 @@ mod tests {
     }
 
     #[test]
-    fn shall_4_a_lock_file_is_excluded() {
+    fn a_lock_file_is_excluded() {
         for name in ["uv.lock", "Cargo.lock", "package-lock.json", "pnpm-lock.yaml"] {
             assert_eq!(count_file(name, b"version = 1\n"), Counted::Excluded(Exclusion::Lock), "{name}");
         }
     }
 
     #[test]
-    fn shall_4_a_minified_asset_is_excluded() {
+    fn a_minified_asset_is_excluded() {
         for name in ["assets/htmx.min.js", "assets/theme.min.css"] {
             assert_eq!(count_file(name, b"x\n"), Counted::Excluded(Exclusion::Minified), "{name}");
         }
     }
 
     #[test]
-    fn shall_5_a_file_that_is_not_utf8_is_excluded() {
+    fn a_file_that_is_not_utf8_is_excluded() {
         assert_eq!(count_file("notes.txt", b"Gr\xfc\xdfe\n"), Counted::Excluded(Exclusion::Undecodable));
     }
 
     #[test]
-    fn shall_8_every_line_lands_in_exactly_one_cell() {
+    fn every_line_lands_in_exactly_one_cell() {
         let counted = file("src/probe.py", b"\"\"\"Doc.\"\"\"\n\n# why\nvalue = 1\n");
         assert_eq!(
             counted.cells,
@@ -119,7 +119,7 @@ mod tests {
     }
 
     #[test]
-    fn shall_49_every_line_of_a_data_file_but_the_blank_ones_is_data() {
+    fn every_line_of_a_data_file_but_the_blank_ones_is_data() {
         assert_eq!(
             file("records/run.json", b"{\n  \"lines\": 1\n\n}\n").cells,
             [cell("JSON", Role::Data, Kind::Data, 3), cell("JSON", Role::Data, Kind::Blank, 1)]
@@ -133,7 +133,7 @@ mod tests {
     }
 
     #[test]
-    fn shall_23_unparsable_python_is_counted_by_comment_markers_and_marked() {
+    fn unparsable_python_is_counted_by_comment_markers_and_marked() {
         let counted = file("broken.py", b"# why\ndef broken(:\n");
         assert!(counted.unparsed);
         assert_eq!(
@@ -152,7 +152,7 @@ mod tests {
     }
 
     #[test]
-    fn shall_16_markdown_outside_fences_is_prose() {
+    fn markdown_outside_fences_is_prose() {
         let expected = BTreeSet::from([
             ("Markdown", Kind::Prose, 2),
             ("Markdown", Kind::Blank, 1),
@@ -162,7 +162,7 @@ mod tests {
     }
 
     #[test]
-    fn shall_17_a_fenced_block_counts_under_the_language_it_names() {
+    fn a_fenced_block_counts_under_the_language_it_names() {
         let text = "Run it:\n\n```python\n# set up\nvalue = 1\n```\n";
         let expected = BTreeSet::from([
             ("Markdown", Kind::Prose, 3),
@@ -174,7 +174,7 @@ mod tests {
     }
 
     #[test]
-    fn shall_17_a_fence_without_a_known_language_stays_markdown() {
+    fn a_fence_without_a_known_language_stays_markdown() {
         let expected = BTreeSet::from([("Markdown", Kind::Prose, 2), ("Markdown", Kind::Unclassified, 1)]);
         assert_eq!(cells("README.md", "```\nsome output\n```\n"), expected);
     }
@@ -203,7 +203,7 @@ mod tests {
     }
 
     #[test]
-    fn shall_18_code_cells_count_under_the_kernel_language_and_markdown_cells_as_prose() {
+    fn code_cells_count_under_the_kernel_language_and_markdown_cells_as_prose() {
         let text = notebook(serde_json::json!([
             {"cell_type": "markdown", "source": ["# Analysis\n", "\n", "Why we look."]},
             {"cell_type": "code", "source": ["# load\n", "value = 1"], "outputs": []},
@@ -218,7 +218,7 @@ mod tests {
     }
 
     #[test]
-    fn shall_19_outputs_and_metadata_are_not_counted() {
+    fn outputs_and_metadata_are_not_counted() {
         let text = notebook(serde_json::json!([{
             "cell_type": "code",
             "source": "value = 1",
@@ -229,7 +229,7 @@ mod tests {
     }
 
     #[test]
-    fn shall_21_script_and_style_content_counts_under_javascript_and_css() {
+    fn script_and_style_content_counts_under_javascript_and_css() {
         let text = "<style>\n  p { color: red; }\n</style>\n<script>\n  // greet\n  console.log(\"hi\");\n</script>\n<p>done</p>\n";
         let expected = BTreeSet::from([
             ("HTML", Kind::Code, 5),
@@ -241,7 +241,7 @@ mod tests {
     }
 
     #[test]
-    fn shall_21_a_script_that_opens_and_closes_on_one_line_stays_html() {
+    fn a_script_that_opens_and_closes_on_one_line_stays_html() {
         assert_eq!(cells("page.html", "<script src=\"app.js\"></script>\n"), BTreeSet::from([("HTML", Kind::Code, 1)]));
     }
 

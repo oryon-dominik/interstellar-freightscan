@@ -8,7 +8,7 @@ description = "Counts every line of a repository by language, role and kind"
 license = "MIT"
 repository = "https://github.com/oryon-dominik/interstellar-freightscan"
 readme = "README.md"
-keywords = ["loc", "lines-of-code", "statistics", "cli"]
+keywords = ["lines-of-code", "cli"]
 categories = ["command-line-utilities", "development-tools"]
 include = ["src/**", "tests/**", "CHANGES.md", "LICENSE", "README.md"]
 

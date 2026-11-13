@@ -48,23 +48,25 @@ freightscan --format json            # the tables as one JSON document
 freightscan --matrix --files         # add language × role, and every file
 freightscan --files --sort lines     # every file, largest first; --order asc turns it round
 freightscan --detailed               # every kind, role and language apart instead of folded
-freightscan fleet --tests            # the test share beside every repository
 freightscan --snapshot freight.jsonl # append a record per directory, report the change since the last
 freightscan fleet                    # every repository of the list in FREIGHTSCAN_REPOS, one row each
+freightscan fleet --tests            # the test share beside every repository
 freightscan fleet --forks            # the forks too; --private the private repositories, --all both
 ```
 
 Inside a git repository freightscan counts what git tracks (git 2.38 or later, for the sizes in
 `ls-files --format`). Elsewhere it walks the directory and skips dependency, cache and build
-directories. Binaries, lock files and minified assets are left out and reported per reason.
+directories. Binaries, lock files, minified assets and files that are not UTF-8 are left out
+and reported per reason.
 
 Every section opens with its head: a row per role group — engineering, documentation,
 data, other — with its share of all lines, then the lines per kind group — code, docs (docstrings,
 comments and prose), data, blank, other — and the test share: test code against test and source
 code together. The tables below fold the same way and name the eight largest languages, the rest
-as `others`; `--detailed` shows every kind, role and language apart. `NO_COLOR` turns the colours off. On a terminal the view
-fits the terminal's width: when the full view is too wide it gives way step by step, the
-bar first, the frame next, then the full numbers. Redirected, the output is plain text.
+as `others`; `--detailed` shows every kind, role and language apart. `NO_COLOR` turns the
+colours off. On a terminal the view fits the terminal's width: when the full view is too wide
+it gives way step by step — a shorter bar, the frame, the percentages, then the full numbers,
+and the bar last. Redirected, the output is plain text.
 
 ## Several repositories
 

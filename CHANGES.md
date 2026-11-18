@@ -83,6 +83,3 @@
 #### Bug Fixes
 
 - **(licensing)** the notices name freightscan — copied from gaffa - ([8c6f80f](https://github.com/oryon-dominik/interstellar-freightscan/commit/8c6f80fc5d53a2f140f3339a12c0b03cd7273b82))
-
-
-
